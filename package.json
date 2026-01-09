@@ -4,6 +4,9 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
+    "start": "pnpm -w -r --parallel --filter web --filter api start",
+    "start:web": "pnpm --filter web start",
+    "start:api": "pnpm --filter api start",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "check-types": "turbo run check-types"
