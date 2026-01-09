@@ -24,6 +24,9 @@ export default function OrdersList({ orders }: { orders: orderSummary[] }) {
       >
         {virtualizer.getVirtualItems().map((virtualItem) => {
           const order = orders[virtualItem.index];
+
+          if(!order) return null;
+
           return (
             <div
               key={order.IDOrdine}
