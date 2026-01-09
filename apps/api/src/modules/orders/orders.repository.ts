@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { ArticleInfoDto, OrderDto, orderSummary } from "@repo/shared";
+import { ArticleDto, OrderSummary } from "@repo/shared";
 import { DataSource } from "typeorm";
 
 @Injectable()
@@ -8,8 +8,8 @@ export class OrdersRepository {
     private readonly dataSource: DataSource,
   ) { }
 
-  async findById(id: string): Promise<OrderDto> {
-    const ordine: OrderDto[] = await this.dataSource.query(
+  async findById(id: string): Promise<OrderSummary> {
+    const ordine: OrderSummary[] = await this.dataSource.query(
       `select 
         ords.IDOrdine as IdOrdine, 
         ords.DataOrd as DataOrdine,
@@ -41,7 +41,7 @@ export class OrdersRepository {
       return ordine[0];
   }
 
-  findOrderArticles(orderId: string): Promise<ArticleInfoDto[]> {
+  findOrderArticles(orderId: string): Promise<ArticleDto[]> {
     return this.dataSource.query(`
       select 
         art.ID_Articolo as IDProdotto,
@@ -57,15 +57,9 @@ export class OrdersRepository {
       `);
   }
 
-  findSummary() : Promise<orderSummary[]> {
+  getSummary(): Promise<OrderSummary[]> {
     return this.dataSource.query(`
-      SELECT 
-        ords.IDOrdine,
-        ords.DataOrd,
-        SUM(r.TotaleRiga) Totale
-      FROM PRO_COM_ORDINI ords
-      JOIN PRO_COM_ORDRIGHE r ON r.IDOrdine = ords.IDOrdine
-      GROUP BY ords.IDOrdine, ords.DataOrd
+      SELECT * from Orders
     `);
   }
 }

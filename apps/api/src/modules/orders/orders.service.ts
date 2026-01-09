@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { OrdersRepository } from "./orders.repository";
-import { ArticleInfoDto, OrderDto, OrderInfoDto, orderSummary } from "@repo/shared";
+import { ApiResponse, OrderSummary } from "@repo/shared";
 
 @Injectable()
 export class OrdersService {
@@ -8,37 +8,57 @@ export class OrdersService {
     private readonly repo: OrdersRepository,
   ) { }
 
-  async getOrderSummary() : Promise<orderSummary[]> {
-    const orders: orderSummary[] = await this.repo.findSummary();
+  async getOrders() : Promise<ApiResponse<OrderSummary[]>> {
+    try
+    {
 
-    return orders.sort((a, b) => b.DataOrd.getTime() - a.DataOrd.getTime());
+      return {
+        ok: true,
+        message: "Orders fetched successfully",
+        
+      }
+    }
+    catch(error){
+      return {
+        ok: false,
+        message: "Error fetching orders",
+        error: {
+          code: "FETCH_ERROR",
+          message: error.message,
+        },
+      };
+    }
   }
 
-  async getOrderDetails(id: string): Promise<OrderInfoDto> {
-    const order: OrderDto = await this.repo.findById(id);
-    const products: ArticleInfoDto[] = await this.repo.findOrderArticles(id);
+  async getOrder(id: string): Promise<ApiResponse<OrderSummary>> {
+    try{
+      const order = await this.repo.findById(id);
+      return {
+        ok: true,
+        message: "Order fetched successfully",
+        data: order,
+      };
+    }catch(error){
+      return {
+        ok: false,
+        message: "Error fetching order details",
+        error: {
+          code: "FETCH_ERROR",
+          message: error.message,
+        },
+      };
+    }
+  }
 
-    const response: OrderInfoDto = {
-      IdOrdine: order.IdOrdine,
-      DataOrdine: order.DataOrdine,
-      Cliente: {
-        IDCliente: order.IdCliente,
-        ragsoc: order.RagioneSoc,
-        indirizzo: order.Indirizzo,
-        comune: order.Comune,
-        cap: order.Cap,
-        nazione: order.Nazione,
+  async createOrder(): Promise<ApiResponse> {
+    return {
+      ok: false,
+      message: "Not implemented",
+      error: {
+        code: "NOT_IMPLEMENTED",
+        message: "This endpoint is not yet implemented"
       },
-      Articles: products.map(p => ({
-        IDProdotto: p.IDProdotto,
-        NomeProdotto: p.NomeProdotto,
-        UnitaMisura: p.UnitaMisura,
-        Quantita: p.Quantita,
-        PrezzoU: Number(p.PrezzoU),
-        Totale: Number(p.Totale),
-      })),
-      TotOrdine: order.TotOrdine,
     };
-    return response;
   }
+
 }

@@ -1,4 +1,5 @@
-import { UserRole, UserStatus } from '../types/common.types';
+import { UserRole } from '../enums';
+import {  UserStatus } from '../types/common.types';
 
 // Interface per l'entità User
 export interface IUser {

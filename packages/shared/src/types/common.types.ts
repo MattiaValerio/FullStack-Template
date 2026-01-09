@@ -1,6 +1,4 @@
-// Tipi comuni per l'autenticazione
-export type UserRole = 'admin' | 'lawyer' | 'client' | 'guest';
-
+// Tipi comuni utilizzati in più moduli
 export type UserStatus = 'active' | 'inactive' | 'pending' | 'suspended';
 
 export type DocumentStatus = 'draft' | 'pending' | 'approved' | 'rejected';

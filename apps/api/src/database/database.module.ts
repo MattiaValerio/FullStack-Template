@@ -1,21 +1,19 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { OrderEntity } from './Entities/order.entity';
+import { UserEntity } from './Entities/cliente.entity';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
-      type: 'mssql',
-      host: 'vdbsrv2016',
-      username: 'help',
-      password: 'help',
-      database: 'DENAP1',
-      entities: [],
-      synchronize: true,
-      options:{
-        instanceName:'sql2022',
-        encrypt:false,
-        trustServerCertificate:true
-      }
+      type: 'postgres',
+      url: 'postgresql://postgres:XwUTmWxzGEuvDjICzrxvZhQnrcwRXBLD@switchback.proxy.rlwy.net:20193/railway',
+      database: 'railway',
+      entities: [
+        OrderEntity,
+        UserEntity
+      ],
+      synchronize: false,
     }),
   ],
 })

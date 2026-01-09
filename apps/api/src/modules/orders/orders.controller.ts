@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from "@nestjs/common";
+import { Controller, Get, Param, Post } from "@nestjs/common";
 import { OrdersService } from "./orders.service";
 
 @Controller('orders')
@@ -7,11 +7,16 @@ export class OrdersController {
 
   @Get()
   getSummary() {
-    return this.service.getOrderSummary();
+    return this.service.getOrders();
   }
 
   @Get(':id')
   getDetails(@Param('id') id: string) {
-    return this.service.getOrderDetails(id);
+    return this.service.getOrder(id);
+  }
+
+  @Post()
+  createOrder() {
+    return this.service.createOrder();
   }
 }

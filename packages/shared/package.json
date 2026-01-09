@@ -1,6 +1,6 @@
 {
   "name": "@repo/shared",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "private": true,
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -20,11 +20,19 @@
     "./interfaces": {
       "types": "./dist/interfaces/index.d.ts",
       "default": "./dist/interfaces/index.js"
+    },
+    "./enums": {
+      "types": "./dist/enums/index.d.ts",
+      "default": "./dist/enums/index.js"
+    },
+    "./response": {
+      "types": "./dist/response/index.d.ts",
+      "default": "./dist/response/index.js"
     }
   },
   "scripts": {
     "build": "tsc",
-    "dev": "tsc --watch",
+    "devvv": "tsc --watch",
     "clean": "rimraf dist",
     "typecheck": "tsc --noEmit"
   },
