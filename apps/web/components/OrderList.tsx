@@ -1,11 +1,11 @@
 // app/OrdersList.tsx
 'use client';
 
-import { orderSummary } from '@repo/shared';
+import { OrderSummary } from '@repo/shared';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import { useRef } from 'react';
 
-export default function OrdersList({ orders }: { orders: orderSummary[] }) {
+export default function OrdersList({ orders }: { orders: OrderSummary[] }) {
   const parentRef = useRef(null);
 
   const virtualizer = useVirtualizer({
@@ -29,7 +29,7 @@ export default function OrdersList({ orders }: { orders: orderSummary[] }) {
 
           return (
             <div
-              key={order.IDOrdine}
+              key={order.Id}
               style={{
                 position: 'absolute',
                 top: 0,
@@ -41,10 +41,10 @@ export default function OrdersList({ orders }: { orders: orderSummary[] }) {
             >
               <div className="rounded-lg border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
                 <h2 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">
-                  Order #{order.IDOrdine}
+                  Order #{order.Id}
                 </h2>
                 <p className="text-zinc-700 dark:text-zinc-300">
-                  Total: ${order.Totale.toFixed(2)}
+                  Total: ${order.TotalAmount.toFixed(2)}
                 </p>
               </div>
             </div>

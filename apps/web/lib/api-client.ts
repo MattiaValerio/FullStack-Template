@@ -1,8 +1,8 @@
-import { orderSummary } from '@repo/shared';
+import { OrderSummary } from '@repo/shared';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL!;
-
-export async function getOrders(): Promise<orderSummary[]> {
+  
+export async function getOrders(): Promise<OrderSummary[]> {
 
   // Prevent API calls during build time
   if (!API_URL || process.env.NODE_ENV === 'production' && !process.env.RUNTIME) {
